@@ -8,6 +8,7 @@ from filer.fields.file import FilerFileField
 from cmsplugin_filer_utils import FilerPluginManager
 from distutils.version import LooseVersion
 
+from image_cropping import ImageRatioField
 
 class FilerImage(CMSPlugin):
     LEFT = "left"
@@ -17,6 +18,8 @@ class FilerImage(CMSPlugin):
                      )
     caption_text = models.CharField(_("caption text"), null=True, blank=True, max_length=255)
     image = FilerImageField(null=True, blank=True, default=None, verbose_name=_("image"))
+    cropping = ImageRatioField('image', '0x0', allow_fullsize=True)
+    # cropping = ImageRatioField('image', '430x360')
     if LooseVersion(django.get_version()) < LooseVersion('1.5'):
         image_url = models.URLField(_("alternative image url"), null=True, blank=True, default=None)
     else:
